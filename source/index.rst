@@ -73,6 +73,7 @@ line and through an API.
    advanced-ca
    cli
    multi-user
+   hsm
    monitoring
    publication-server
    testbed
