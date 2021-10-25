@@ -80,6 +80,7 @@ line and through an API.
    docker
    upgrade
    failure-scenarios
+   manage-aspas
 .. history
 .. authors
 .. license
