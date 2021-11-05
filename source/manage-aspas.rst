@@ -55,12 +55,12 @@ configurations when using the CLI:
 .. code-block:: text
 
    AS65000 => AS65001, AS65002(v4), AS65003(v6)
-
+   AS65001 => <none>
 
 . Important:: You can only have ONE ASPA configuration for each customer ASN.
               This is because Krill MUST (RFC) create a single ASPA object, for
-              all provider ASNs.
-
+              all provider ASNs. If you wish to have an explicit empty list of
+              provider ASN, use '<none>'.
 
 Add an ASPA
 -----------
