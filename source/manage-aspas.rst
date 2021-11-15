@@ -21,7 +21,7 @@ CLI binary gets built with additional subcommands needed for this feature:
 .. code-block:: bash
 
    cargo install krill --git https://github.com/NLnetLabs/krill \
-                       --tag v0.9.3-rc2 \
+                       --tag v0.9.3-rc3 \
                        --features aspa \
                        --locked
 
