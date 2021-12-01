@@ -223,3 +223,49 @@ it.
 New keys are created by the ``default_signer`` unless they are one-off keys in which case they are created by the
 ``one_off_signer``. Signing with a key is handled by the signer that owns the key.
 
+SoftHSMv2 Example
+-----------------
+
+Lets see how to setup `SoftHSMv2 <https://github.com/opendnssec/SoftHSMv2>`_ with Krill. This example uses commands
+suitable for an Ubuntu operating system, for other operating systems you may need to use slightly different commands.
+
+First, install and setup SoftHSM v2:
+
+.. code-block::
+   
+   $ sudo apt install -y softhsm2
+   $ softhsm2-util --init-token --slot 0 --label "My token 1" --so-pin 1234 --user-pin 5678
+
+Next add the following to your `krill.conf` file:
+
+.. code-block::
+
+   [[signers]]
+   type = "PKCS#11"
+   name = "SoftHSMv2"
+   lib_path = "/usr/lib/softhsm/libsofthsm2.so"
+   slot = "My token 1"
+   user_pin = 5678
+
+Now (re)start Krill.
+
+That's it! When you next create a CA Krill will create a key pair for it in SoftHSMv2 instead of using OpenSSL.
+
+One way to inspect the keys stored inside OpenSSL is using the ``pkcs11-tool`` command:
+
+.. code-block::
+
+   $ sudo apt install -y opensc
+   $ pkcs11-tool --module /usr/lib/softhsm/libsofthsm2.so -O -p 5678
+   Using slot 0 with a present token (0x542bc831)
+   Public Key Object; RSA 2048 bits
+     label:      Krill
+     ID:         e83e96883ee73e69e0e57d54b6726c9d45f788c5
+     Usage:      verify
+     Access:     local
+   Public Key Object; RSA 2048 bits
+     label:      Krill
+     ID:         9ecd3796786c7a073d5384c155d8d475d103df74
+     Usage:      verify
+     Access:     local
+   ...
