@@ -85,6 +85,7 @@ line and through an API.
    :name: toc-advanced
    
    cli
+   hsm
    multi-user
    publication-server
    manage-children
