@@ -46,9 +46,9 @@ PKCS#11              KMIP
 ===================  =================
 C_DeleteObject       Activate
 C_Finalize           Create Key Pair
-C_FindObjectsInit    Destroy
-C_FindObjects        Get
-C_FindObjectsFinal   Modify Attribute
+C_FindObjects        Destroy
+C_FindObjectsFinal   Get
+C_FindObjectsInit    Modify Attribute
 C_GetAttributeValue  Query
 C_GetInfo            Revoke
 C_GetSlotInfo        Sign
