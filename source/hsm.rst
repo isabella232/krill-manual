@@ -51,8 +51,8 @@ C_FindObjects        Get
 C_FindObjectsFinal   Modify Attribute
 C_GetAttributeValue  Query
 C_GetInfo            Revoke
-C_GetSlotList        Sign
-C_GetSlotInfo        
+C_GetSlotInfo        Sign
+C_GetSlotList        
 C_GetTokenInfo       
 C_Initialize         
 C_Login              
