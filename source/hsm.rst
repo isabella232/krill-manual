@@ -67,7 +67,7 @@ the "single" HSM is in fact a cluster of HSMs.
 PKCS#11 or KMIP?
 """"""""""""""""
 
-The PKCS#11 and KMIP are very similar in the capabilities they provide, so much so that there are commercial offerings
+PKCS#11 and KMIP are very similar in the capabilities they provide, so much so that there are commercial offerings
 that can bridge from one to the other, HSMs may offer support for both and both standards are maintained by 
 `OASIS <https://www.oasis-open.org/>`_. From a Krill server operation perspective however they are very different and
 each has its own PROs and CONs.
