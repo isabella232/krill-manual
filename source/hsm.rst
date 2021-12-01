@@ -49,9 +49,9 @@ C_Finalize           Create Key Pair
 C_FindObjectsInit    Destroy
 C_FindObjects        Get
 C_FindObjectsFinal   Modify Attribute
-C_GetAttributeValue  Revoke
-C_GetInfo            Sign
-C_GetSlotList        
+C_GetAttributeValue  Query
+C_GetInfo            Revoke
+C_GetSlotList        Sign
 C_GetSlotInfo        
 C_GetTokenInfo       
 C_Initialize         
