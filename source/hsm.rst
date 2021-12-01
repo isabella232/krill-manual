@@ -177,6 +177,10 @@ Note:
 Configuring a KMIP signer
 """""""""""""""""""""""""
 
+.. note:: To actually use a KMIP based signer you must first set it up according to the vendors instructions. This may
+          require setting up users and passwords and/or obtaining certificates in order to populate the associated
+          settings in the ``krill.conf`` file.
+
 For a KMIP signer you must specify the host FQDN or IP address, and optionally other connection details such as port number, client
 certificate, server CA certificate, username and password.
 
