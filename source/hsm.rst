@@ -83,6 +83,8 @@ or how many requests it can handle at once or how many system resources it uses.
 KMIP is arguably simpler to setup. With KMIP you only need to manage Krill and the HSM, there is no additional
 library component to manage as with PKCS#11. Krill itself communicates directly with the HSM and so all
 configuration, logging & resource usage is determined by Krill and monitoring is done by monitoring Krill itself.
+Krill connects to the KMIP server via TLS encrypted TCP and thus could also potentially be routed to one of many
+backend servers in a cluster, or the server could be a process running locally on the same host such as PyKMIP.
 
 Scenarios
 ---------
