@@ -234,7 +234,7 @@ First, install and setup SoftHSM v2:
 .. code-block::
    
    $ sudo apt install -y softhsm2
-   $ softhsm2-util --init-token --slot 0 --label "My token 1" --so-pin 1234 --user-pin 5678
+   $ softhsm2-util --init-token --slot 0 --label "My token 1" --so-pin 1234 --pin 5678
 
 Next add the following to your `krill.conf` file:
 
