@@ -100,6 +100,10 @@ Krill does not support migration of existing RPKI CA private keys from one signe
 to perform a key roll for each CA. **NOTE:** Not all keys can be rolled. See the warning above about migration of
 parent/child and CA/publication server relationships to new identity keys.
 
+To perform a key roll from one signer to another you must first change the ``default_signer`` in ``krill.conf`` to
+the new signer, and then restart Krill. After this point any new keys that are created by Krill, including the new
+key resulting from a rollover, will be created in using the new ``default_signer``.
+
 Configuration
 -------------
 
@@ -191,4 +195,22 @@ Note:
   - ``insecure`` will disable verification of any certificate presented by the server.
   - ``force`` should only be used if the HSM fails to advertize support for a feature that Krill requires but actually
     the HSM **does** support the feature.
+
+Signer Lifecycle
+----------------
+
+At startup Krill will announce the configured signers in its logs but will not yet attempt to connect to them. Only
+once a signing related operation needs to be performed will Krill attempt to connect to the signer.
+
+If there is a problem connecting to a signer Krill will retry, unless the problem is fatal such as the signer lacking
+support for required operations. A problem with a signer will not stop Krill from running and continuing to serve the
+UI and API or from executing background tasks. Thus if some keys are owned by one signer that is reachable and another
+signer is not reachable, Krill will continue to operate correctly for operations involving the reachable signer.
+
+On initial connection to a new signer Krill will create a "signer identity key" in the HSM. This serves to verify that
+the signer is able to create and sign with keys and in future that the signer is the one that owns keys attributed to
+it.
+
+New keys are created by the ``default_signer`` unless they are one-off keys in which case they are created by the
+``one_off_signer``. Signing with a key is handled by the signer that owns the key.
 
