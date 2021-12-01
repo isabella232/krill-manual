@@ -153,8 +153,7 @@ Configuring a PKCS#11 signer
 .. Note:: To actually use a PKCS#11 based signer you must first set it up according to the vendors instructions. This
           may require creating additional configuration files outside of Krill, setting passwords, provisioning users,
           exporting shell environment variables for use by the library while running as part of the Krill process,
-          creating or determining a slot ID or label, etc. This is outside the scope of Krill and varies greatly by
-          vendor and so is not documented here.
+          creating or determining a slot ID or label, etc.
 
 For a PKCS#11 signer you must specify the path to the dynamic library file for the HSM that was supplied by the HSM
 provider and a slot ID or label, and if needed, a user pin.
