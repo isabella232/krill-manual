@@ -39,6 +39,28 @@ Krill has been tested with the following (in alphabetical order):
   - `Utimaco Security Server 4.45.3 <https://www.utimaco.com/products/categories/general-purpose-solutions/securityserver>`_ (PKCS#11)
   - `YubiHSM2 <https://www.yubico.com/products/hardware-security-module/>`_ (PKCS#11)
 
+In order to work with Krill the HSM must support the following operations:
+
+===================  =================
+PKCS#11              KMIP
+===================  =================
+C_DeleteObject       Activate
+C_Finalize           Create Key Pair
+C_FindObjectsInit    Destroy
+C_FindObjects        Get
+C_FindObjectsFinal   Modify Attribute
+C_GetAttributeValue  Revoke
+C_GetInfo            Sign
+C_GetSlotList        
+C_GetSlotInfo        
+C_GetTokenInfo       
+C_Initialize         
+C_Login              
+C_OpenSession        
+C_Sign               
+C_SignInit           
+===================  =================
+
 Krill can use a cluster of HSMs if the cluster appears to Krill as a single HSM, i.e. if Krill is not aware that
 the "single" HSM is in fact a cluster of HSMs.
 
