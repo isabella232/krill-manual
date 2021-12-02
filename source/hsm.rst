@@ -6,18 +6,18 @@ Integrating with an HSM
 .. versionadded:: vT.B.D
 
 Krill uses a "signer" to create and manage keys and to sign data with them. By default Krill uses a software OpenSSL
-based signer on the host system where Krill runs. If you have access to a hardware security module (HSM>`_ you can
+based signer on the host system where Krill runs. If you have access to a hardware security module (HSM) you can
 instead delegate creation, ownership, management of and signing with keys to the HSM.
 
 .. Warning:: This page documents a pre-release feature in Krill. HSM support is not yet available.
 
-.. Note:: One-off signing keys (used in MFT/ROA EE certificates>`_ will **NOT** be created with, stored in or signed
+.. Note:: One-off signing keys (used in MFT/ROA EE certificates>) will **NOT** be created with, stored in or signed
           with the HSM. This is because it can be slow to generate, sign with and destroy one-off signing keys
           using an HSM yet one-off signing keys do not need to be protected to the same degree as RPKI CA private
           keys, parent/child identity keys or CA/publication server identity keys.
 
 .. Warning:: The RPKI RFCs do not define a way to :ref:`roll <Key Rollover>` identity keys (used for parent/child and
-             CA/publication server trust relationships>`_. While Krill supports regeneration of identity keys, they
+             CA/publication server trust relationships>). While Krill supports regeneration of identity keys, they
              cannot be rolled in an automated way as none of the parent NIR/RIR currently support doing so. The only
              way to change an identity key is to re-do the XML exchanges involved in establishing trust.
 
@@ -151,7 +151,7 @@ The default configuration is equivalent to addding the following in ``krill.conf
 Signer Roles
 """"""""""""
 
-When configuring more than one signer, one may be designated the ``default_signer`` and another (or the same one>`_ may
+When configuring more than one signer, one may be designated the ``default_signer`` and another (or the same one>) may
 be designated the ``one_off_signer``. The ``default_signer`` is used to create all new keys, except in the case of one-off
 signing for which the ``one_off_signer`` signer will be used to create a new temporary key, sign with it then destroy it.
 
@@ -256,7 +256,7 @@ New keys are created by the ``default_signer`` unless they are one-off keys in w
           
           Krill is able to maintain the mapping between keys associated with a signer ID and the actual connected
           signer even if the name and server connection details in ``krill.conf`` are changed so you are free to rename
-          the signer or replace the physical server by a (synchronized>`_ spare or upgrade or change its IP address or
+          the signer or replace the physical server by a (synchronized>) spare or upgrade or change its IP address or
           the credentials used to access it and Krill will still know when connecting to it which keys it possesses.
 
 .. Warning:: If Krill is not configured to connect to the signer that possesses a key that Krill needs to sign with,
@@ -265,9 +265,9 @@ New keys are created by the ``default_signer`` unless they are one-off keys in w
 
              One particular scenario to watch out for is when reconfiguring an existing Krill instance to use an HSM
              when that Krill instance already has at least one CA (and thus already created at least one key pair
-             using OpenSSL>`_.
+             using OpenSSL>).
 
-             In this scenario, if the changes to ``krill.conf`` to use the HSM define only the one signer (the HSM>`_
+             In this scenario, if the changes to ``krill.conf`` to use the HSM define only the one signer (the HSM>)
              and do NOT set that signer as the ``one_off_signer``, then Krill will activate the default OpenSSL signer
              for one-off key signing and will use it to find the previously created OpenSSL keys.
              
@@ -309,7 +309,7 @@ One way to inspect the keys stored inside OpenSSL is using the ``pkcs11-tool`` c
 
    $ sudo apt install -y opensc
    $ pkcs11-tool --module /usr/lib/softhsm/libsofthsm2.so -O -p 5678
-   Using slot 0 with a present token (0x542bc831>`_
+   Using slot 0 with a present token (0x542bc831>)
    Public Key Object; RSA 2048 bits
      label:      Krill
      ID:         e83e96883ee73e69e0e57d54b6726c9d45f788c5
