@@ -64,14 +64,16 @@ In order to work with Krill the HSM must support the following operations:
 ===================  =================
 PKCS#11              KMIP
 ===================  =================
-C_DeleteObject       Activate
-C_Finalize           Create Key Pair
-C_FindObjects        Destroy
-C_FindObjectsFinal   Get
-C_FindObjectsInit    Modify Attribute
-C_GetAttributeValue  Query
-C_GetInfo            Revoke
-C_GetSlotInfo        Sign
+C_CloseSession       Activate
+C_DeleteObject       Create Key Pair
+C_Finalize           Destroy
+C_FindObjects        Get
+C_FindObjectsFinal   Modify Attribute
+C_FindObjectsInit    Query
+C_GenerateKeyPair    Revoke
+C_GetAttributeValue  Sign
+C_GetInfo            
+C_GetSlotInfo        
 C_GetSlotList        
 C_GetTokenInfo       
 C_Initialize         
