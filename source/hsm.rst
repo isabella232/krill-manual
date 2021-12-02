@@ -119,10 +119,6 @@ signer for all signing related operations. To use a signer other than the defaul
 
 All signers must have a ``type`` and a ``name`` and properties specific to the type of signer.
 
-When configuring more than one signer, one may be designated the ``default_signer`` and another (or the same one) may
-be designated the ``one_off_signer``. The ``default_signer`` is used to create all new keys, except in the case of one-off
-signing for which the ``one_off_signer`` signer will be used to create a new temporary key, sign with it then destroy it.
-
 The default configuration is equivalent to addding the following in ``krill.conf``:
 
 .. code-block::
@@ -130,6 +126,13 @@ The default configuration is equivalent to addding the following in ``krill.conf
    [[signers]]
    type = "OpenSSL"
    name = "Default OpenSSL signer"
+
+Signer Roles
+""""""""""""
+
+When configuring more than one signer, one may be designated the ``default_signer`` and another (or the same one) may
+be designated the ``one_off_signer``. The ``default_signer`` is used to create all new keys, except in the case of one-off
+signing for which the ``one_off_signer`` signer will be used to create a new temporary key, sign with it then destroy it.
 
 Specifying the ``default_signer`` and ``one_off_signer`` is done by referencing the name of the signer. For example the
 above is equivalent to:
@@ -233,12 +236,10 @@ New keys are created by the ``default_signer`` unless they are one-off keys in w
           ID corresponds to the backend by verifying the existence of a previously created "signer identity key" within
           the backend and that the backend is able to correctly sign with that key.
           
-          If a key identifier is associated with a signer ID for which no signer is connected Krill will not be able to
-          sign using that key. Krill is able to maintain the mapping between keys associated with a signer ID and the
-          actual connected signer even if the name and server connection details in ``krill.conf`` are changed so you
-          are free to rename the signer or replace the physical server by a (synchronized) spare or upgrade or change
-          its IP address or the credentials used to access it and Krill will still know when connecting to it which
-          keys it possesses.
+          Krill is able to maintain the mapping between keys associated with a signer ID and the actual connected
+          signer even if the name and server connection details in ``krill.conf`` are changed so you are free to rename
+          the signer or replace the physical server by a (synchronized) spare or upgrade or change its IP address or
+          the credentials used to access it and Krill will still know when connecting to it which keys it possesses.
 
 .. Warning:: If Krill is not configured to connect to the signer that possesses a key that Krill needs to sign with,
              or is unable to connect to it using the configured settings, then Krill will be unable to sign with that
