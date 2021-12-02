@@ -135,7 +135,7 @@ See ``krill.conf`` for full details.
 
 .. Note:: Any changes to the configuration file will not take effect until Krill is restarted.
 
-For backward compatibility if no ``[signers]]`` sections exist in ``krill.conf`` then Krill will use the default OpenSSL
+For backward compatibility if no ``[[signers]]`` sections exist in ``krill.conf`` then Krill will use the default OpenSSL
 signer for all signing related operations. To use a signer other than the default you must add one or more
 ``[[signers]]`` sections to your ``krill.conf`` file, one for each signer that you wish to define.
 
