@@ -223,7 +223,39 @@ the signer is able to create and sign with keys and in future that the signer is
 it.
 
 New keys are created by the ``default_signer`` unless they are one-off keys in which case they are created by the
-``one_off_signer``. Signing with a key is handled by the signer that owns the key.
+``one_off_signer``. Signing with a key is handled by the signer that possesses the key.
+
+.. Note:: Krill determines the signer that possesses a key by consulting a mapping that it keeps from key identifier
+          to a Krill internal signer ID and associated metadata.
+          
+          On initial connection to a signer it "binds" the internal representation of the connected signer to the
+          matching internal signer ID and updates the metadata about the signer. It verifies that the internal signer
+          ID corresponds to the backend by verifying the existence of a previously created "signer identity key" within
+          the backend and that the backend is able to correctly sign with that key.
+          
+          If a key identifier is associated with a signer ID for which no signer is connected Krill will not be able to
+          sign using that key. Krill is able to maintain the mapping between keys associated with a signer ID and the
+          actual connected signer even if the name and server connection details in ``krill.conf`` are changed so you
+          are free to rename the signer or replace the physical server by a (synchronized) spare or upgrade or change
+          its IP address or the credentials used to access it and Krill will still know when connecting to it which
+          keys it possesses.
+
+.. Warning:: If Krill is not configured to connect to the signer that possesses a key that Krill needs to sign with,
+             or is unable to connect to it using the configured settings, then Krill will be unable to sign with that
+             key!
+
+             One particular scenario to watch out for is when reconfiguring an existing Krill instance to use an HSM
+             when that Krill instance already has at least one CA (and thus already created at least one key pair
+             using OpenSSL).
+
+             In this scenario, if the changes to ``krill.conf`` to use the HSM define only the one signer (the HSM)
+             and do NOT set that signer as the ``one_off_signer``, then Krill will activate the default OpenSSL signer
+             for one-off key signing and will use it to find the previously created OpenSSL keys.
+             
+             If however the one and only HSM signer is also set as the ``one_off_signer`` then Krill will not activate
+             the OpenSSL signer and so will not find the previously created OpenSSL keys. In this case you must
+             explicitly add a ``[[signers]]`` block of ``type = "OpenSSL"`` with default settings thereby causing Krill
+             to activate the default OpenSSL signer.
 
 SoftHSMv2 Example
 -----------------
