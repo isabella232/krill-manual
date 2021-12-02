@@ -12,6 +12,8 @@ confusing to Krill users who do not need them.
 So, at least for now, you will need to use the CLI (or API) to use the
 functions described below.
 
+.. _Key Rollover:
+
 Key Rollover
 ------------
 
