@@ -135,9 +135,9 @@ See ``krill.conf`` for full details.
 
 .. Note:: Any changes to the configuration file will not take effect until Krill is restarted.
 
-For backward compatibility if no ``[signers <` sections exist in ``krill.conf`` then Krill will use the default OpenSSL
+For backward compatibility if no ``[signers]]`` sections exist in ``krill.conf`` then Krill will use the default OpenSSL
 signer for all signing related operations. To use a signer other than the default you must add one or more
-``[[signers <` sections to your ``krill.conf`` file, one for each signer that you wish to define.
+``[[signers]]`` sections to your ``krill.conf`` file, one for each signer that you wish to define.
 
 All signers must have a ``type`` and a ``name`` and properties specific to the type of signer.
 
@@ -273,7 +273,7 @@ New keys are created by the ``default_signer`` unless they are one-off keys in w
              
              If however the one and only HSM signer is also set as the ``one_off_signer`` then Krill will not activate
              the OpenSSL signer and so will not find the previously created OpenSSL keys. In this case you must
-             explicitly add a ``[[signers <` block of ``type = "OpenSSL"`` with default settings thereby causing Krill
+             explicitly add a ``[[signers]]`` block of ``type = "OpenSSL"`` with default settings thereby causing Krill
              to activate the default OpenSSL signer.
 
 SoftHSMv2 Example
