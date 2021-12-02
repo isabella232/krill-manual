@@ -145,7 +145,8 @@ The default configuration is equivalent to addding the following in ``krill.conf
 
 .. code-block::
 
-   [[signers <   type = "OpenSSL"
+   [[signers]]
+   type = "OpenSSL"
    name = "Default OpenSSL signer"
 
 Signer Roles
@@ -163,7 +164,8 @@ above is equivalent to:
    default_signer = "Default OpenSSL signer"
    one_off_signer = "Default OpenSSL signer"
 
-   [[signers <   type = "OpenSSL"
+   [[signers]]
+   type = "OpenSSL"
    name = "Default OpenSSL signer"
 
 When only a single signer is defined it will implicitly be the ``default_signer``. When defining more than one signer
@@ -185,7 +187,8 @@ provider and a slot ID or label, and if needed, a user pin.
 
 .. code-block::
 
-   [[signers <   type = "PKCS#11"
+   [[signers]]
+   type = "PKCS#11"
    name = "SoftHSMv2 via PKCS#11"
    lib_path = "/usr/local/lib/softhsm/libsofthsm2.so"
    slot = 0x12a9f8f7                                      
@@ -210,7 +213,8 @@ certificate, server CA certificate, username and password.
 
 .. code-block::
 
-   [[signers <   type = "KMIP"
+   [[signers]]
+   type = "KMIP"
    name = "Kryptus via KMIP"
    host = "my.hsm.example.com"
    port = 5696                                             # optional, default = 5696
@@ -293,7 +297,8 @@ Next add the following to your `krill.conf` file:
 
 .. code-block::
 
-   [[signers <   type = "PKCS#11"
+   [[signers]]
+   type = "PKCS#11"
    name = "SoftHSMv2"
    lib_path = "/usr/lib/softhsm/libsofthsm2.so"
    slot = "My token 1"
