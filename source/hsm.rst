@@ -299,7 +299,7 @@ Next add the following to your `krill.conf` file:
    slot = "My token 1"
    user_pin = 5678
 
-Now (re>`_start Krill.
+Now (re)start Krill.
 
 That's it! When you next create a CA Krill will create a key pair for it in SoftHSMv2 instead of using OpenSSL.
 
