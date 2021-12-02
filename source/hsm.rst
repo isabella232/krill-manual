@@ -16,10 +16,10 @@ instead delegate creation, ownership, management of and signing with keys to the
           using an HSM yet one-off signing keys do not need to be protected to the same degree as RPKI CA private
           keys, parent/child identity keys or CA/publication server identity keys.
 
-.. Warning:: The RPKI RFCs do not define a way to roll identity keys (used for parent/child and CA/publication server
-             trust relationships). While Krill supports regeneration of identity keys, they cannot be rolled in an
-             automated way as none of the parent NIR/RIR currently support doing so. The only way to change an
-             identity key is to re-do the XML exchanges involved in establishing trust.
+.. Warning:: The RPKI RFCs do not define a way to :ref:`roll <Key Rollover>` identity keys (used for parent/child and
+             CA/publication server trust relationships). While Krill supports regeneration of identity keys, they
+             cannot be rolled in an automated way as none of the parent NIR/RIR currently support doing so. The only
+             way to change an identity key is to re-do the XML exchanges involved in establishing trust.
 
 Compatible HSMs
 ---------------
@@ -99,8 +99,8 @@ Migrating to or between HSMs
 """"""""""""""""""""""""""""
 
 Krill does not support migration of existing RPKI CA private keys from one signer to another. Instead you will need
-to perform a key roll for each CA. **NOTE:** Not all keys can be rolled. See the warning above about migration of
-parent/child and CA/publication server relationships to new identity keys.
+to perform a :ref:`key roll <Key Rollover>` for each CA. **NOTE:** Not all keys can be rolled. See the warning above
+about migration of parent/child and CA/publication server relationships to new identity keys.
 
 To perform a key roll from one signer to another you must first change the ``default_signer`` in ``krill.conf`` to
 the new signer, and then restart Krill. After this point any new keys that are created by Krill, including the new
