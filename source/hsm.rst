@@ -6,18 +6,18 @@ Integrating with an HSM
 .. versionadded:: vT.B.D
 
 Krill uses a "signer" to create and manage keys and to sign data with them. By default Krill uses a software OpenSSL
-based signer on the host system where Krill runs. If you have access to a hardware security module (HSM) you can
+based signer on the host system where Krill runs. If you have access to a hardware security module (HSM>`_ you can
 instead delegate creation, ownership, management of and signing with keys to the HSM.
 
 .. Warning:: This page documents a pre-release feature in Krill. HSM support is not yet available.
 
-.. Note:: One-off signing keys (used in MFT/ROA EE certificates) will **NOT** be created with, stored in or signed
+.. Note:: One-off signing keys (used in MFT/ROA EE certificates>`_ will **NOT** be created with, stored in or signed
           with the HSM. This is because it can be slow to generate, sign with and destroy one-off signing keys
           using an HSM yet one-off signing keys do not need to be protected to the same degree as RPKI CA private
           keys, parent/child identity keys or CA/publication server identity keys.
 
 .. Warning:: The RPKI RFCs do not define a way to :ref:`roll <Key Rollover>` identity keys (used for parent/child and
-             CA/publication server trust relationships). While Krill supports regeneration of identity keys, they
+             CA/publication server trust relationships>`_. While Krill supports regeneration of identity keys, they
              cannot be rolled in an automated way as none of the parent NIR/RIR currently support doing so. The only
              way to change an identity key is to re-do the XML exchanges involved in establishing trust.
 
@@ -32,12 +32,32 @@ HSM.
 
 Krill has been tested with the following (in alphabetical order):
 
-  - `AWS Cloud HSM <https://aws.amazon.com/cloudhsm/>`_ (PKCS#11)
-  - `Kryptus kNET HSM v1.25.0 <https://www.kryptus.com/knet/>`_ (KMIP & PKCS#11)
-  - `PyKMIP v0.10.0 <https://github.com/OpenKMIP/PyKMIP>`_ (KMIP)
-  - `SoftHSMv2 2.6.1 <https://github.com/opendnssec/SoftHSMv2>`_ (PKCS#11)
-  - `Utimaco Security Server 4.45.3 <https://www.utimaco.com/products/categories/general-purpose-solutions/securityserver>`_ (PKCS#11)
-  - `YubiHSM2 <https://www.yubico.com/products/hardware-security-module/>`_ (PKCS#11)
+==================================   ================   ==================   ============
+Cryptographic Token Name             Tested Protocols   Tested Token Form    Test Results
+==================================   ================   ==================   ============
+`AWS CloudHSM`_                      PKCS#11            Cloud Service        `#556`_  
+`Kryptus kNET HSM`_ v1.25.0          PKCS#11 & KMIP     Cloud Service        `#554`_, `#565`_
+`PyKMIP`_ v0.10.0                    KMIP               Software             `#564`_  
+`SoftHSMv2`_ v2.6.1                  PKCS#11            Software             `#553`_  
+`Utimaco Security Server`_ v4.45.3   PKCS#11            Software Simulator   `#732`_  
+`YubiHSM 2`_                         PKCS#11            USB key              `#555`_  
+==================================   ================   ==================   ============
+
+.. _AWS CloudHSM: https://aws.amazon.com/cloudhsm/
+.. _Kryptus kNET HSM: https://www.kryptus.com/knet/
+.. _PyKMIP: https://github.com/OpenKMIP/PyKMIP
+.. _SoftHSMv2: https://github.com/opendnssec/SoftHSMv2
+.. _Utimaco Security Server: https://www.utimaco.com/products/categories/general-purpose-solutions/securityserver
+.. _YubiHSM 2: https://www.yubico.com/products/hardware-security-module/
+
+.. _#553: https://github.com/NLnetLabs/krill/issues/553
+.. _#554: https://github.com/NLnetLabs/krill/issues/554
+.. _#555: https://github.com/NLnetLabs/krill/issues/555
+.. _#556: https://github.com/NLnetLabs/krill/issues/556
+.. _#564: https://github.com/NLnetLabs/krill/issues/564
+.. _#565: https://github.com/NLnetLabs/krill/issues/565
+.. _#732: https://github.com/NLnetLabs/krill/issues/732
+
 
 In order to work with Krill the HSM must support the following operations:
 
@@ -113,9 +133,9 @@ See ``krill.conf`` for full details.
 
 .. Note:: Any changes to the configuration file will not take effect until Krill is restarted.
 
-For backward compatibility if no ``[signers]`` sections exist in ``krill.conf`` then Krill will use the default OpenSSL
+For backward compatibility if no ``[signers <` sections exist in ``krill.conf`` then Krill will use the default OpenSSL
 signer for all signing related operations. To use a signer other than the default you must add one or more
-``[[signers]]`` sections to your ``krill.conf`` file, one for each signer that you wish to define.
+``[[signers <` sections to your ``krill.conf`` file, one for each signer that you wish to define.
 
 All signers must have a ``type`` and a ``name`` and properties specific to the type of signer.
 
@@ -123,14 +143,13 @@ The default configuration is equivalent to addding the following in ``krill.conf
 
 .. code-block::
 
-   [[signers]]
-   type = "OpenSSL"
+   [[signers <   type = "OpenSSL"
    name = "Default OpenSSL signer"
 
 Signer Roles
 """"""""""""
 
-When configuring more than one signer, one may be designated the ``default_signer`` and another (or the same one) may
+When configuring more than one signer, one may be designated the ``default_signer`` and another (or the same one>`_ may
 be designated the ``one_off_signer``. The ``default_signer`` is used to create all new keys, except in the case of one-off
 signing for which the ``one_off_signer`` signer will be used to create a new temporary key, sign with it then destroy it.
 
@@ -142,8 +161,7 @@ above is equivalent to:
    default_signer = "Default OpenSSL signer"
    one_off_signer = "Default OpenSSL signer"
 
-   [[signers]]
-   type = "OpenSSL"
+   [[signers <   type = "OpenSSL"
    name = "Default OpenSSL signer"
 
 When only a single signer is defined it will implicitly be the ``default_signer``. When defining more than one signer
@@ -165,8 +183,7 @@ provider and a slot ID or label, and if needed, a user pin.
 
 .. code-block::
 
-   [[signers]]
-   type = "PKCS#11"
+   [[signers <   type = "PKCS#11"
    name = "SoftHSMv2 via PKCS#11"
    lib_path = "/usr/local/lib/softhsm/libsofthsm2.so"
    slot = 0x12a9f8f7                                      
@@ -191,8 +208,7 @@ certificate, server CA certificate, username and password.
 
 .. code-block::
 
-   [[signers]]
-   type = "KMIP"
+   [[signers <   type = "KMIP"
    name = "Kryptus via KMIP"
    host = "my.hsm.example.com"
    port = 5696                                             # optional, default = 5696
@@ -238,7 +254,7 @@ New keys are created by the ``default_signer`` unless they are one-off keys in w
           
           Krill is able to maintain the mapping between keys associated with a signer ID and the actual connected
           signer even if the name and server connection details in ``krill.conf`` are changed so you are free to rename
-          the signer or replace the physical server by a (synchronized) spare or upgrade or change its IP address or
+          the signer or replace the physical server by a (synchronized>`_ spare or upgrade or change its IP address or
           the credentials used to access it and Krill will still know when connecting to it which keys it possesses.
 
 .. Warning:: If Krill is not configured to connect to the signer that possesses a key that Krill needs to sign with,
@@ -247,15 +263,15 @@ New keys are created by the ``default_signer`` unless they are one-off keys in w
 
              One particular scenario to watch out for is when reconfiguring an existing Krill instance to use an HSM
              when that Krill instance already has at least one CA (and thus already created at least one key pair
-             using OpenSSL).
+             using OpenSSL>`_.
 
-             In this scenario, if the changes to ``krill.conf`` to use the HSM define only the one signer (the HSM)
+             In this scenario, if the changes to ``krill.conf`` to use the HSM define only the one signer (the HSM>`_
              and do NOT set that signer as the ``one_off_signer``, then Krill will activate the default OpenSSL signer
              for one-off key signing and will use it to find the previously created OpenSSL keys.
              
              If however the one and only HSM signer is also set as the ``one_off_signer`` then Krill will not activate
              the OpenSSL signer and so will not find the previously created OpenSSL keys. In this case you must
-             explicitly add a ``[[signers]]`` block of ``type = "OpenSSL"`` with default settings thereby causing Krill
+             explicitly add a ``[[signers <` block of ``type = "OpenSSL"`` with default settings thereby causing Krill
              to activate the default OpenSSL signer.
 
 SoftHSMv2 Example
@@ -275,14 +291,13 @@ Next add the following to your `krill.conf` file:
 
 .. code-block::
 
-   [[signers]]
-   type = "PKCS#11"
+   [[signers <   type = "PKCS#11"
    name = "SoftHSMv2"
    lib_path = "/usr/lib/softhsm/libsofthsm2.so"
    slot = "My token 1"
    user_pin = 5678
 
-Now (re)start Krill.
+Now (re>`_start Krill.
 
 That's it! When you next create a CA Krill will create a key pair for it in SoftHSMv2 instead of using OpenSSL.
 
@@ -292,7 +307,7 @@ One way to inspect the keys stored inside OpenSSL is using the ``pkcs11-tool`` c
 
    $ sudo apt install -y opensc
    $ pkcs11-tool --module /usr/lib/softhsm/libsofthsm2.so -O -p 5678
-   Using slot 0 with a present token (0x542bc831)
+   Using slot 0 with a present token (0x542bc831>`_
    Public Key Object; RSA 2048 bits
      label:      Krill
      ID:         e83e96883ee73e69e0e57d54b6726c9d45f788c5
